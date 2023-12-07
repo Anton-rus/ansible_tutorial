@@ -2,7 +2,7 @@
 localhost ansible_connection=local
 
 [remote]
-srv8-usebookcol ansible_ssh_host=srv8-usebookcol
-srv8-tofellfrog ansible_ssh_host=srv8-usebookcol
+172.18.247.55 ansible_ssh_host=172.18.247.55
+172.18.247.108 ansible_ssh_host=172.18.247.108
 
 
