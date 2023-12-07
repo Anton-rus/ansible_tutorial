@@ -1,2 +1,8 @@
-172.18.247.241
-172.18.247.53
+[local]
+localhost ansible_connection=local
+
+[remote]
+srv8-usebookcol ansible_ssh_host=srv8-usebookcol
+srv8-tofellfrog ansible_ssh_host=srv8-usebookcol
+
+
