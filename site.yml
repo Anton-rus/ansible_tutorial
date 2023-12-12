@@ -5,18 +5,14 @@
   tasks: 
    
   - name: install updates for RedHat
-    tags: 
-      - updates 
-      - updates-rhel
+    tags: updates
     yum: 
       update_only: yes 
       update_cache: yes 
     when: ansible_distribution == "RedHat"
 
   - name: install apache and php-mod for RedHat
-    tags:
-      - apache 
-      - apache-rhel
+    tags: install
     yum:
       name:
         - httpd
@@ -25,10 +21,7 @@
     when: ansible_distribution == "RedHat"
 
   - name: start httpd (apache) for RedHat
-    tags: 
-       - apache 
-       - apache-start-rhel 
-       - apache-start
+    tags: httpd-start
     service:
       name: httpd
       state: started
@@ -36,9 +29,7 @@
     when: ansible_distribution == "RedHat"
 
   - name: change listen port apache in Rhel
-    tags: 
-      - apache 
-      - apache-port-change
+    tags: apache-port-change
     lineinfile:
       path: /etc/httpd/conf/httpd.conf
       regexp: '^Listen'
@@ -58,18 +49,14 @@
   tasks:
 
   - name: install updates for Ubuntu
-    tags: 
-      - updates 
-      - updates-ubuntu
+    tags: updates
     apt:
       upgrade: dist
       update_cache: yes
     when: ansible_distribution == "Ubuntu"
 
   - name: install apache and php-mod for Ubuntu
-    tags: 
-      - apache 
-      - apache-ubuntu
+    tags: install
     apt: 
       name: 
         - apache2
@@ -78,10 +65,7 @@
     when: ansible_distribution == "Ubuntu"
   
   - name: start apache for Ubuntu
-    tags: 
-      - apache 
-      - apache-start-ubuntu 
-      - apache-start
+    tags: apache-start
     service:
       name: apache2
       state: started
@@ -89,9 +73,7 @@
     when: ansible_distribution == "Ubuntu"
 
   - name: change listen port apache in Ubuntu
-    tags: 
-      - apache 
-      - apache-port-change
+    tags: apache-port-change
     lineinfile:
       path: /etc/apache2/ports.conf
       regexp: '^Listen'
