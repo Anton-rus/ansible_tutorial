@@ -1,0 +1,16 @@
+---
+
+- hosts: remote-ubuntu
+  become: true
+  tasks: 
+  
+  - name: create file with content
+    copy: 
+      dest: /tmp/netology.txt
+      content: 
+        <I like Linux>
+
+    
+
+
+

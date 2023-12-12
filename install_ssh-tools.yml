@@ -1,6 +1,6 @@
 ---
 
-- hosts: all
+- hosts: remote-ubuntu
   become: true
   tasks: 
   
@@ -11,11 +11,14 @@
       state: latest
       update_cache: yes
 
+- hosts: remote-rhel
+  become: true
+  tasks:
+
   - name: install ssh-tools RedHat
-     apt:
+    yum:
       name:
-        - httpd
-        - php
+        - ssh-tools
       state: latest
       update_cache: yes
 

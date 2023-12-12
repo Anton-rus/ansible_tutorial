@@ -1,0 +1,13 @@
+---
+
+- hosts: remote-ubuntu
+  become: true
+  tasks: 
+  
+  - name: apache check Ubuntu
+    shell: service apache2 status
+
+    
+
+
+

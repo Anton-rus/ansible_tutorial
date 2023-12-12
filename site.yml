@@ -1,0 +1,55 @@
+---
+
+- hosts: remote-rhel
+  become: true
+  tasks: 
+   
+  - name: install updates for RedHat
+    tags: updates
+    yum: 
+      update_only: yes 
+      update_cache: yes 
+    when: ansible_distribution == "RedHat"
+
+  - name: install apache and php-mod for RedHat
+    tags: apache
+    yum:
+      name:
+        - httpd
+        - php
+      state: latest
+    when: ansible_distribution == "RedHat"
+
+- hosts: remote-ubuntu
+  become: true
+  tasks:
+
+  - name: install updates for Ubuntu
+    tags: updates
+    apt:
+      upgrade: dist
+      update_cache: yes
+    when: ansible_distribution == "Ubuntu"
+
+  - name: install apache and php-mod for Ubuntu
+    tags: apache
+    apt: 
+      name: 
+        - apache2
+        - libapache2-mod-php
+      state: latest
+    when: ansible_distribution == "Ubuntu"
+
+
+- hosts: all 
+  become: true
+  tasks: 
+
+  - name: Add the user 'tony' with a specific uid and a primary group of 'unix_users'
+    tags: useradd
+    user:
+       name: messi
+       uid: 1041
+       group: unix_users
+
+
