@@ -5,14 +5,18 @@
   tasks: 
    
   - name: install updates for RedHat
-    tags: updates,updates-rhel
+    tags: 
+      - updates 
+      - updates-rhel
     yum: 
       update_only: yes 
       update_cache: yes 
     when: ansible_distribution == "RedHat"
 
   - name: install apache and php-mod for RedHat
-    tags: apache,apache-rhel
+    tags:
+      - apache 
+      - apache-rhel
     yum:
       name:
         - httpd
@@ -20,31 +24,95 @@
       state: latest
     when: ansible_distribution == "RedHat"
 
+  - name: start httpd (apache) for RedHat
+    tags: 
+       - apache 
+       - apache-start-rhel 
+       - apache-start
+    service:
+      name: httpd
+      state: started
+      enabled: yes
+    when: ansible_distribution == "RedHat"
+
+  - name: change listen port apache in Rhel
+    tags: 
+      - apache 
+      - apache-port-change
+    lineinfile:
+      path: /etc/httpd/conf/httpd.conf
+      regexp: '^Listen'
+      line: Listen 90
+    when: ansible_distribution == "RedHat"
+
+  - name: Service restart for Rhel
+    tags: apache-restart
+    service:
+      name: httpd
+      state: restarted
+    when: ansible_distribution == "RedHat"
+
+
 - hosts: remote-ubuntu
   become: true
   tasks:
 
   - name: install updates for Ubuntu
-    tags: updates,updates-ubuntu
+    tags: 
+      - updates 
+      - updates-ubuntu
     apt:
       upgrade: dist
       update_cache: yes
     when: ansible_distribution == "Ubuntu"
 
   - name: install apache and php-mod for Ubuntu
-    tags: apache,apache-ubuntu
+    tags: 
+      - apache 
+      - apache-ubuntu
     apt: 
       name: 
         - apache2
         - libapache2-mod-php
       state: latest
     when: ansible_distribution == "Ubuntu"
+  
+  - name: start apache for Ubuntu
+    tags: 
+      - apache 
+      - apache-start-ubuntu 
+      - apache-start
+    service:
+      name: apache2
+      state: started
+      enabled: yes 
+    when: ansible_distribution == "Ubuntu"
+
+  - name: change listen port apache in Ubuntu
+    tags: 
+      - apache 
+      - apache-port-change
+    lineinfile:
+      path: /etc/apache2/ports.conf
+      regexp: '^Listen'
+      line: Listen 90
+    when: ansible_distribution == "Ubuntu"
+
+
+  - name: Service restart for Ubuntu
+    tags: apache-restart
+    service:
+      name: apache2
+      state: restarted
+    when: ansible_distribution == "Ubuntu"
+
+
 
 - hosts: all 
   become: true
   tasks: 
 
-  - name: Add the user 'tony' with a specific uid and a primary group of 'unix_users'
+  - name: Add the user 'messi' with a specific uid and a primary group of 'unix_users'
     tags: useradd
     user:
        name: messi
