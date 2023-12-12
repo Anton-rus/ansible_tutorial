@@ -5,14 +5,14 @@
   tasks: 
    
   - name: install updates for RedHat
-    tags: updates
+    tags: updates,updates-rhel
     yum: 
       update_only: yes 
       update_cache: yes 
     when: ansible_distribution == "RedHat"
 
   - name: install apache and php-mod for RedHat
-    tags: install
+    tags: install,install-rhel
     yum:
       name:
         - httpd
@@ -49,14 +49,14 @@
   tasks:
 
   - name: install updates for Ubuntu
-    tags: updates
+    tags: updates,updates-ubuntu
     apt:
       upgrade: dist
       update_cache: yes
     when: ansible_distribution == "Ubuntu"
 
   - name: install apache and php-mod for Ubuntu
-    tags: install
+    tags: install,install-ubuntu
     apt: 
       name: 
         - apache2
