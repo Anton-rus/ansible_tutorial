@@ -5,14 +5,14 @@
   tasks: 
    
   - name: install updates for RedHat
-    tags: updates
+    tags: updates,updates-rhel
     yum: 
       update_only: yes 
       update_cache: yes 
     when: ansible_distribution == "RedHat"
 
   - name: install apache and php-mod for RedHat
-    tags: apache
+    tags: apache,apache-rhel
     yum:
       name:
         - httpd
@@ -25,21 +25,20 @@
   tasks:
 
   - name: install updates for Ubuntu
-    tags: updates
+    tags: updates,updates-ubuntu
     apt:
       upgrade: dist
       update_cache: yes
     when: ansible_distribution == "Ubuntu"
 
   - name: install apache and php-mod for Ubuntu
-    tags: apache
+    tags: apache,apache-ubuntu
     apt: 
       name: 
         - apache2
         - libapache2-mod-php
       state: latest
     when: ansible_distribution == "Ubuntu"
-
 
 - hosts: all 
   become: true
@@ -52,4 +51,12 @@
        uid: 1041
        group: unix_users
 
+  - name: copy default html file for site 
+    tags: apache,html-copy
+    copy:
+      src: default_site.html
+      dest: /var/www/html/index.html
+      owner: root
+      group: root
+      mode: 0644
 
