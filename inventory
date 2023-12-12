@@ -1,8 +1,11 @@
 [local]
-localhost ansible_connection=local
+localhost ansible_connection=local 
 
-[remote]
-172.18.247.55 ansible_ssh_host=172.18.247.55
+[remote-ubuntu]
+172.18.247.55 ansible_ssh_host=172.18.247.55 
 172.18.247.108 ansible_ssh_host=172.18.247.108
-172.18.247.107 ansible_ssh_host=172.18.247.107
+
+[remote-rhel] 
+172.18.247.107 ansible_ssh_host=172.18.247.107 
+172.18.247.155
 
